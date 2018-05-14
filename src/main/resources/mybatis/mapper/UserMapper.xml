@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dreamforever.springboot.dao.IUserDao">
+	<resultMap id="BaseResultMap" type="com.dreamforever.springboot.entity.User">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, name, password, phone
+	</sql>
+
+	<select id="getUserList" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM d_user
+	</select>
+
+	<select id="getUserById" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM d_user
+		WHERE id = #{id}
+	</select>
+
+	<insert id="add" parameterType="com.dreamforever.springboot.entity.User">
+		INSERT INTO
+		d_user
+		(name,password,phone)
+		VALUES
+		(#{name}, #{password},#{phone} )
+	</insert>
+
+	<update id="update" parameterType="java.util.Map">
+		UPDATE
+		d_user
+		SET
+		name = #{user.name},password = #{user.password}
+		WHERE
+		id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		DELETE FROM
+		d_user
+		WHERE
+		id = #{id}
+	</delete>
+</mapper>
